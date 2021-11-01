@@ -98,7 +98,7 @@ def main(args: Optional[List[str]] = None) -> 'NoReturn':
     is_updated = update_checking.run()
 
     try:
-        sys.exit(run_program(parsed, parser=parser))
+        return run_program(parsed, parser=parser)
     except NotImplementedError as e:
         logger.debug('\n' + traceback.format_exc())
         logger.error('NotImplementedError')
@@ -106,14 +106,14 @@ def main(args: Optional[List[str]] = None) -> 'NoReturn':
         logger.info('see: https://github.com/online-judge-tools/oj')
         if not is_updated:
             logger.info(utils.HINT + 'try updating the version of online-judge-tools: $ pip3 install -U online-judge-tools online-judge-api-client')
-        sys.exit(1)
+        return 1
     except Exception as e:
         logger.debug('\n' + traceback.format_exc())
         logger.exception(str(e))
         if not is_updated:
             logger.info(utils.HINT + 'try updating the version of online-judge-tools: $ pip3 install -U online-judge-tools online-judge-api-client')
-        sys.exit(1)
+        return 1
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
